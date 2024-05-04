@@ -52,13 +52,9 @@ export default function TodoAddForm({ addTodo }: TodoAddForm) {
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex-1">
               <FormControl>
-                <Input
-                  placeholder="shadcn"
-                  {...field}
-                  className="flex-1 rounded-l-md"
-                />
+                <Input placeholder="What would you like to do?" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
