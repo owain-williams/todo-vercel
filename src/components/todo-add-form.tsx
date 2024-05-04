@@ -16,17 +16,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
+import { useAction } from "next-safe-action/hooks";
+import { addTodo } from "@/actions/add-todo";
 
 const formSchema = z.object({
   title: z.string().min(1).max(191),
 });
 
-type TodoAddForm = {
-  addTodo: (title: string) => Promise<Todo>;
+type TodoAddFormProps = {
+  userId: string;
 };
 
-export default function TodoAddForm({ addTodo }: TodoAddForm) {
+export default function TodoAddForm({ userId }: TodoAddFormProps) {
   const { refresh } = useRouter();
+  const { execute, status } = useAction(addTodo);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,7 +39,8 @@ export default function TodoAddForm({ addTodo }: TodoAddForm) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    addTodo(values.title);
+    execute({ userId, title: values.title });
+    form.reset();
     refresh();
   }
 
@@ -57,7 +62,11 @@ export default function TodoAddForm({ addTodo }: TodoAddForm) {
             </FormItem>
           )}
         />
-        <Button className="rounded-md" type="submit">
+        <Button
+          className="rounded-md"
+          type="submit"
+          disabled={status === "executing"}
+        >
           Add
         </Button>
       </form>
