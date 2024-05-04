@@ -3,6 +3,8 @@ import TodoItem from "@/components/todo-item";
 import { db } from "@/lib/db";
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
+import { GithubIcon } from "lucide-react";
+import Link from "next/link";
 
 export default async function HomePage() {
   const { userId } = auth();
@@ -17,7 +19,12 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row items-center justify-between">
-        <div />
+        <Link
+          href="https://github.com/owain-williams/todo-vercel"
+          className="p-4"
+        >
+          <GithubIcon />
+        </Link>
         <div className="p-4">
           <UserButton />
         </div>
