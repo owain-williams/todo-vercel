@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm prisma generate && npm prisma db push && next build",
+    "prisma": "pnpm dlx prisma generate && pnpm dlx prisma db push",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.0.6",
+    "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "5.13.0",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-label": "^2.0.2",
@@ -21,8 +23,10 @@
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.4",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.6"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -16,6 +16,9 @@ datasource db {
 
 model Todo {
   id        String  @id @default(cuid())
+  userId    String
   title     String
-  completed Boolean
+  completed Boolean @default(false)
+
+  @@index([userId])
 }
