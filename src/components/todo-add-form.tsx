@@ -48,7 +48,7 @@ export default function TodoAddForm({ userId }: TodoAddFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex mb-4 gap-x-1"
+        className="flex mb-4 gap-x-2"
       >
         <FormField
           control={form.control}
