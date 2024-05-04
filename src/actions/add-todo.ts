@@ -10,7 +10,6 @@ const schema = z.object({
 })
 
 export const addTodo = action(schema, async ({ userId, title }) => {
-  console.log(`userId: ${userId}, title: ${title}`)
   return await db.todo.create({
     data: {
       userId: userId || "",
