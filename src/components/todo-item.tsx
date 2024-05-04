@@ -16,11 +16,12 @@ export default function TodoItem({ todo }: TodoItemProps) {
     <>
       <div className="flex items-center justify-between py-2">
         <div className="flex items-center gap-2">
-          <Checkbox id={todo.id} checked={todo.completed} />
+          <Checkbox id={todo.id} />
           <Label
             className={cn(
-              "text-gray-500 dark:text-gray-400 line-through",
-              todo.completed && "line-through"
+              !todo.completed
+                ? "text-primary"
+                : "line-through text-gray-500 dark:text-gray-400"
             )}
             htmlFor={todo.id}
           >
