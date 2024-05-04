@@ -1,15 +1,21 @@
 'use server'
 
+import { z } from 'zod'
+import { action } from '@/lib/safe-action'
 import { db } from "@/lib/db"
-import { Todo } from "@prisma/client"
 
-export default async function toggleComplete(todo: Todo, checked: boolean) {
+const schema = z.object({
+  id: z.string(),
+  checked: z.boolean(),
+})
+
+export const toggleComplete = action(schema, async ({ id, checked }) => {
   return await db.todo.update({
     where: {
-      id: todo.id,
+      id,
     },
     data: {
       completed: checked,
     },
   })
-}
+})

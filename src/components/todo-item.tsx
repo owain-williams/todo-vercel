@@ -1,6 +1,6 @@
 "use client";
 
-import toggleComplete from "@/actions/toggle-complete";
+import { toggleComplete } from "@/actions/toggle-complete";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -20,10 +20,16 @@ export default function TodoItem({ todo }: TodoItemProps) {
   const { refresh } = useRouter();
   const [checked, setChecked] = useState<boolean>(todo.completed);
   const toggleChecked = () => setChecked(!checked);
-  const { execute, result, status } = useAction(deleteTodo);
+  const { execute: deleteExecute, status: deleteStatus } =
+    useAction(deleteTodo);
+  const {
+    execute: toggleExecute,
+    result: toggleResult,
+    status: toggleStatus,
+  } = useAction(toggleComplete);
 
   useEffect(() => {
-    toggleComplete(todo, checked);
+    toggleExecute({ id: todo.id, checked });
   }, [checked]);
 
   return (
@@ -33,7 +39,7 @@ export default function TodoItem({ todo }: TodoItemProps) {
           <Checkbox
             checked={checked}
             id={todo.id}
-            disabled={status === "executing"}
+            disabled={deleteStatus === "executing"}
           />
           <Label
             className={cn(
@@ -50,12 +56,12 @@ export default function TodoItem({ todo }: TodoItemProps) {
           className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
           size="sm"
           variant="ghost"
-          disabled={status === "executing"}
+          disabled={deleteStatus === "executing"}
         >
           <TrashIcon
             className="h-4 w-4"
             onClick={() => {
-              execute({ id: todo.id });
+              deleteExecute({ id: todo.id });
               refresh();
             }}
           />
