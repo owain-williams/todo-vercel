@@ -57,6 +57,7 @@ export default function TodoItem({ todo }: TodoItemProps) {
           size="sm"
           variant="ghost"
           disabled={deleteStatus === "executing"}
+          aria-label="Delete todo item"
         >
           <TrashIcon
             className="h-4 w-4"

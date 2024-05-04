@@ -22,6 +22,7 @@ export default async function HomePage() {
         <Link
           href="https://github.com/owain-williams/todo-vercel"
           className="p-4"
+          aria-label="GitHub source code link button"
         >
           <GithubIcon />
         </Link>
