@@ -11,6 +11,7 @@ import { useAction } from "next-safe-action/hooks";
 import { deleteTodo } from "@/actions/delete-todo";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { intlFormatDistance } from "date-fns";
 
 type TodoItemProps = {
   todo: Todo;
@@ -23,14 +24,20 @@ export default function TodoItem({ todo }: TodoItemProps) {
   const { execute: deleteExecute, status: deleteStatus } =
     useAction(deleteTodo);
   const {
-    execute: toggleExecute,
-    result: toggleResult,
-    status: toggleStatus,
+    execute: executeToggle,
+    result: resultToggle,
+    status: statusToggle,
   } = useAction(toggleComplete);
 
   useEffect(() => {
-    toggleExecute({ id: todo.id, checked });
+    executeToggle({ id: todo.id, checked });
   }, [checked]);
+
+  useEffect(() => {
+    if (statusToggle === "hasSucceeded") {
+      refresh();
+    }
+  }, [statusToggle]);
 
   return (
     <>
@@ -43,30 +50,35 @@ export default function TodoItem({ todo }: TodoItemProps) {
           />
           <Label
             className={cn(
-              !checked
-                ? "text-primary"
-                : "line-through text-gray-500 dark:text-gray-400"
+              !checked ? "text-primary" : "line-through text-primary/50"
             )}
             htmlFor={todo.id}
           >
             {todo.title}
           </Label>
         </div>
-        <Button
-          className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-          size="sm"
-          variant="ghost"
-          disabled={deleteStatus === "executing"}
-          aria-label="Delete todo item"
-        >
-          <TrashIcon
-            className="h-4 w-4"
-            onClick={() => {
-              deleteExecute({ id: todo.id });
-              refresh();
-            }}
-          />
-        </Button>
+        <div className="flex flex-row items-center gap-4">
+          <sub className="text-primary/50">
+            {checked
+              ? intlFormatDistance(todo.completedAt, new Date())
+              : intlFormatDistance(todo.updatedAt, new Date())}
+          </sub>
+          <Button
+            className="text-primary/50 hover:text-primary"
+            size="sm"
+            variant="ghost"
+            disabled={deleteStatus === "executing"}
+            aria-label="Delete todo item"
+          >
+            <TrashIcon
+              className="h-4 w-4"
+              onClick={() => {
+                deleteExecute({ id: todo.id });
+                refresh();
+              }}
+            />
+          </Button>
+        </div>
       </div>
     </>
   );

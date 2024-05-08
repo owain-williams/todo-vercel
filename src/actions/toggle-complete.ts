@@ -10,12 +10,24 @@ const schema = z.object({
 })
 
 export const toggleComplete = action(schema, async ({ id, checked }) => {
-  return await db.todo.update({
-    where: {
-      id,
-    },
-    data: {
-      completed: checked,
-    },
-  })
+  if (checked) {
+    return await db.todo.update({
+      where: {
+        id,
+      },
+      data: {
+        completed: checked,
+        completedAt: new Date(),
+      },
+    })
+  } else {
+    return await db.todo.update({
+      where: {
+        id,
+      },
+      data: {
+        completed: checked,
+      },
+    })
+  }
 })

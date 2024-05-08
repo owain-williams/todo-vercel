@@ -15,10 +15,15 @@ datasource db {
 }
 
 model Todo {
-  id        String  @id @default(cuid())
-  userId    String
-  title     String
-  completed Boolean @default(false)
+  id          String   @id @default(cuid())
+  userId      String
+  title       String
+  description String
+  tags        String[]
+  completed   Boolean  @default(false)
+  completedAt DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  createdAt   DateTime @default(now())
 
   @@index([userId])
 }
