@@ -18,8 +18,8 @@ model Todo {
   id          String   @id @default(cuid())
   userId      String
   title       String
-  description String
-  tags        String[]
+  description String?
+  tags        String[] @default(["inbox"])
   completed   Boolean  @default(false)
   completedAt DateTime @default(now())
   updatedAt   DateTime @default(now())

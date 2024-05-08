@@ -31,13 +31,13 @@ export default function TodoItem({ todo }: TodoItemProps) {
 
   useEffect(() => {
     executeToggle({ id: todo.id, checked });
-  }, [checked]);
+  }, [checked, executeToggle, todo.id]);
 
   useEffect(() => {
     if (statusToggle === "hasSucceeded") {
       refresh();
     }
-  }, [statusToggle]);
+  }, [statusToggle, refresh]);
 
   return (
     <>
