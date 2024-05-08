@@ -3,6 +3,8 @@
 import { z } from 'zod'
 import { action } from '@/lib/safe-action'
 import { db } from "@/lib/db"
+import { Todo } from '@prisma/client'
+import { revalidatePath } from 'next/cache'
 
 const schema = z.object({
   id: z.string(),
@@ -10,8 +12,9 @@ const schema = z.object({
 })
 
 export const toggleComplete = action(schema, async ({ id, checked }) => {
+  let result: Todo | null = null;
   if (checked) {
-    return await db.todo.update({
+    result = await db.todo.update({
       where: {
         id,
       },
@@ -21,7 +24,7 @@ export const toggleComplete = action(schema, async ({ id, checked }) => {
       },
     })
   } else {
-    return await db.todo.update({
+    result = await db.todo.update({
       where: {
         id,
       },
@@ -30,4 +33,6 @@ export const toggleComplete = action(schema, async ({ id, checked }) => {
       },
     })
   }
+  revalidatePath('/')
+  return result
 })

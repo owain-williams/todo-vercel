@@ -3,6 +3,8 @@
 import { z } from 'zod'
 import { action } from '@/lib/safe-action'
 import { db } from '@/lib/db'
+import { Todo } from '@prisma/client'
+import { revalidatePath } from 'next/cache'
 
 const schema = z.object({
   userId: z.string().min(1).max(191),
@@ -10,10 +12,13 @@ const schema = z.object({
 })
 
 export const addTodo = action(schema, async ({ userId, title }) => {
-  return await db.todo.create({
+  let result: Todo | null = null;
+  result = await db.todo.create({
     data: {
       userId: userId || "",
       title,
     },
   });
+  revalidatePath('/')
+  return result
 })

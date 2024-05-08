@@ -33,11 +33,11 @@ export default function TodoItem({ todo }: TodoItemProps) {
     executeToggle({ id: todo.id, checked });
   }, [checked, executeToggle, todo.id]);
 
-  useEffect(() => {
-    if (statusToggle === "hasSucceeded") {
-      refresh();
-    }
-  }, [statusToggle, refresh]);
+  // useEffect(() => {
+  //   if (statusToggle === "hasSucceeded") {
+  //     refresh();
+  //   }
+  // }, [statusToggle, refresh]);
 
   return (
     <>
