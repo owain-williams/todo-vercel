@@ -1,17 +1,17 @@
 "use client";
 
+import { deleteTodo } from "@/actions/delete-todo";
 import { toggleComplete } from "@/actions/toggle-complete";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Todo } from "@prisma/client";
+import { intlFormatDistance } from "date-fns";
 import { TrashIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
-import { deleteTodo } from "@/actions/delete-todo";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { intlFormatDistance } from "date-fns";
+import { useEffect, useState } from "react";
 
 type TodoItemProps = {
   todo: Todo;

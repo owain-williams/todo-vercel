@@ -1,4 +1,3 @@
-import SideBar from "@/components/sidebar";
 import TodoAddForm from "@/components/todo-add-form";
 import TodoItem from "@/components/todo-item";
 import { db } from "@/lib/db";
