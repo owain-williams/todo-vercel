@@ -19,7 +19,7 @@ export default async function HomePage() {
 
   return (
     <div className="flex h-screen">
-      <SideBar />
+      {/* TODO: SideBar goes here */}
       <div className="flex flex-col w-full p-4">
         <div className="flex flex-row items-center justify-between">
           <Link
